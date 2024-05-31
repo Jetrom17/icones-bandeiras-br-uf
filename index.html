@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Bandeiras do Brasil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            overflow: auto;
+            color: #fff;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .dropdown {
+            margin-bottom: 20px;
+        }
+        .dropdown label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .dropdown select {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .gallery img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        /* Estilos específicos para cada formato */
+        .gallery img.circle {
+            border-radius: 50%;
+        }
+        .gallery img.full {
+            border-radius: 0;
+        }
+        .gallery img.rounded {
+            border-radius: 15%;
+        }
+        .gallery img.square-rounded {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Galeria de Bandeiras do Brasil</h1>
+    <div class="dropdown">
+        <label for="format">Selecione o formato:</label>
+        <select id="format" onchange="updateGallery()">
+            <option value="circle">Círculo</option>
+            <option value="full">Full</option>
+            <option value="rounded">Arredondado</option>
+            <option value="square-rounded">Quadrado Arredondado</option>
+        </select>
+    </div>
+    <div class="gallery" id="gallery"></div>
+
+    <script>
+        const gallery = document.getElementById('gallery');
+        const formatSelect = document.getElementById('format');
+        const estados = [
+            'brasil', 'acre', 'alagoas', 'amapa', 'amazonas', 'bahia', 'ceara', 
+            'distrito-federal', 'espirito-santo', 'goias', 'maranhao', 'mato-grosso', 
+            'mato-grosso-do-sul', 'minas-gerais', 'para', 'paraiba', 'parana', 
+            'pernambuco', 'piaui', 'rio-de-janeiro', 'rio-grande-do-norte', 
+            'rio-grande-do-sul', 'rondonia', 'roraima', 'santa-catarina', 'sao-paulo', 
+            'sergipe', 'tocantins'
+        ];
+
+        function updateGallery() {
+            const selectedFormat = formatSelect.value;
+            gallery.innerHTML = '';
+            estados.forEach((estado, index) => {
+                const img = document.createElement('img');
+                const num = String(index + 1).padStart(2, '0');
+                const url = `https://raw.githubusercontent.com/pierrelapalu/icones-bandeiras-br-uf/master/dist/${selectedFormat}/png-800/${num}-${estado}-${selectedFormat}%404x.png`;
+                img.src = url;
+                img.alt = estado;
+                img.className = selectedFormat; 
+                gallery.appendChild(img);
+            });
+        }
+
+        updateGallery();
+    </script>
+</body>
+</html>
